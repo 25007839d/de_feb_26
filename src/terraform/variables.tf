@@ -3,5 +3,15 @@ variable "project_id" {
 }
 
 variable "region" {
-  type = string
+
+  type    = string
+  default = "asia-south1"
+
+}
+
+variable "zone" {
+
+  type    = string
+  default = "asia-south1-a"
+
 }
