@@ -1,0 +1,41 @@
+version: 2
+
+sources:
+
+  - name: bronze
+
+    database: project-7792d7ca-4ff6-4f52-91b
+    schema: bronze
+
+    tables:
+
+      - name: bronze_machine_master
+
+        description: >
+          Raw machine master data ingested into the Bronze layer.
+
+        columns:
+
+          - name: machine_id
+            description: Unique identifier of the machine.
+
+          - name: machine_name
+            description: Machine name.
+
+          - name: location
+            description: Machine location.
+
+          - name: machine_type
+            description: Type/category of machine.
+
+          - name: install_date
+            description: Date when the machine was installed.
+
+          - name: installation_engineer_name
+            description: Engineer responsible for installation.
+
+          - name: machine_owner_name
+            description: Machine owner.
+
+          - name: ingestion_timestamp
+            description: Timestamp when the record was ingested.

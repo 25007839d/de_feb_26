@@ -1,0 +1,33 @@
+version: 2
+
+models:
+
+  - name: dim_machine
+
+    description: >
+      Clean machine master dimension containing one latest
+      record per machine.
+
+    columns:
+
+      - name: machine_id
+
+        description: Unique machine identifier.
+
+        tests:
+          - not_null
+          - unique
+
+      - name: machine_name
+
+      - name: location
+
+      - name: machine_type
+
+      - name: install_date
+
+      - name: installation_engineer_name
+
+      - name: machine_owner_name
+
+      - name: ingestion_timestamp
