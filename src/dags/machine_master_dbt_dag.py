@@ -4,9 +4,8 @@ from airflow import DAG
 from airflow.operators.bash import BashOperator
 
 
-# dbt project is inside Airflow dags folder
-DBT_PROJECT_DIR = "/opt/airflow/dags/dbt_machine_project"
-DBT_PROFILES_DIR = "/opt/airflow/dags/dbt_machine_project"
+DBT_PROJECT_DIR = "/home/airflow/gcs/dags/dbt_machine_project/dbt"
+DBT_PROFILES_DIR = "/home/airflow/gcs/dags/dbt_machine_project/dbt/profiles"
 
 
 with DAG(
@@ -21,8 +20,15 @@ with DAG(
     dbt_run = BashOperator(
         task_id="dbt_run",
         bash_command=f"""
-        cd {DBT_PROJECT_DIR}
+        set -e
 
+        echo "Checking dbt project directory..."
+        ls -la {DBT_PROJECT_DIR}
+
+        echo "Checking dbt project file..."
+        ls -la {DBT_PROJECT_DIR}/dbt_project.yml
+
+        echo "Running dbt..."
         dbt run \
           --project-dir {DBT_PROJECT_DIR} \
           --profiles-dir {DBT_PROFILES_DIR}
@@ -32,7 +38,9 @@ with DAG(
     dbt_test = BashOperator(
         task_id="dbt_test",
         bash_command=f"""
-        cd {DBT_PROJECT_DIR}
+        set -e
+
+        echo "Running dbt tests..."
 
         dbt test \
           --project-dir {DBT_PROJECT_DIR} \

@@ -4,7 +4,7 @@ sources:
 
   - name: bronze
 
-    database: project-7792d7ca-4ff6-4f52-91b
+    database: indigo-medium-506403-t6
     schema: bronze
 
     tables:

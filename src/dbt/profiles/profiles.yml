@@ -6,7 +6,7 @@ machine_data:
     dev:
       type: bigquery
       method: oauth
-      project: project-7792d7ca-4ff6-4f52-91b
+      project: indigo-medium-506403-t6
       dataset: gold
       location: asia-south1
       threads: 4
