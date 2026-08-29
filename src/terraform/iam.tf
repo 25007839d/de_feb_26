@@ -45,18 +45,25 @@ locals {
   composer_roles = [
 
     "roles/artifactregistry.reader",
+
     "roles/bigquery.connectionUser",
     "roles/bigquery.jobUser",
+    "roles/bigquery.dataViewer",
+    "roles/bigquery.dataEditor",
+    "roles/bigquery.readSessionUser",
+
     "roles/cloudfunctions.invoker",
     "roles/run.invoker",
+
     "roles/composer.worker",
+
     "roles/dataflow.developer",
     "roles/dataflow.worker",
+
     "roles/iam.serviceAccountUser",
+
     "roles/dataproc.editor",
-    "roles/dataproc.worker",
-    "roles/bigquery.dataViewer",
-    "roles/bigquery.readSessionUser"
+    "roles/dataproc.worker"
 
   ]
 
@@ -68,9 +75,9 @@ resource "google_project_iam_member" "composer_roles" {
 
   project = var.project_id
 
-  role    = each.value
+  role = each.value
 
-  member  = "serviceAccount:${google_service_account.composer_service_account.email}"
+  member = "serviceAccount:${google_service_account.composer_service_account.email}"
 
 }
 
