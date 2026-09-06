@@ -1,0 +1,44 @@
+
+name: Deploy DAGs and PySpark app to GCS
+
+on:
+  push:
+    branches:
+      - main # triggers on push to main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      GCP_PROJECT_ID: indigo-medium-506403-t6
+
+      # Target GCS locations (folder-level)
+      COMPOSER_DAGS_BUCKET: gs://asia-south1-iot-composer-447108cd-bucket
+      JARS_BUCKET: gs://socourse_de_1/jars
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: 'projects/101358511321/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
+          service_account: 'iot-platform-sa@indigo-medium-506403-t6.iam.gserviceaccount.com'
+          token_format: 'access_token'
+          access_token_scopes: 'https://www.googleapis.com/auth/cloud-platform'
+
+      - name: Setup Google Cloud CLI
+        uses: google-github-actions/setup-gcloud@v3
+
+      - name: Show gcloud version (optional)
+        run: gcloud version
+
+      # 1) Deploy DAGs from src/gcp_dataproc/airflow_dag/dags
+      - name: Sync DAGs to Composer bucket
+        run: |
+          echo "Syncing ./src -> $COMPOSER_DAGS_BUCKET"
+          gsutil -m rsync -r ./src "$COMPOSER_DAGS_BUCKET"
+
